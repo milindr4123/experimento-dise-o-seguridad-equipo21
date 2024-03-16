@@ -10,8 +10,10 @@ url = "http://localhost:5001/api2/entrenamiento"  # Modifica la URL según la co
 class Entrenamientos(Resource):
     @jwt_required()
     def post(self):
-
-        response = requests.get(url)
+        headers = {
+            'Authorization': "" + request.headers.get('Authorization', None),
+        }
+        response = requests.get(url, headers=headers)
     # Verifica si la solicitud fue exitosa (código de estado HTTP 200)
         if response.status_code == 200:
             data = response.json()  # Obtiene los datos de la respuesta en formato JSON
