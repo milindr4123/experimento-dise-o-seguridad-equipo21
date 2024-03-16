@@ -4,11 +4,15 @@ from flask_restful import Resource
 
 class Auth(Resource):
     def post(self):
-        username = request.json.get("username", None)
-        password = request.json.get("password", None)
+        if request.headers.get('X-From-Gateway') == 'true':
+            username = request.json.get("username", None)
+            password = request.json.get("password", None)
 
-        if username != "admin" or password != "secret":
-            return jsonify({"msg": "Nombre de usuario o contraseña incorrectos"}), 401
+            if username != "admin" or password != "secret":
+                return jsonify({"msg": "Nombre de usuario o contraseña incorrectos"}), 401
 
-        access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token)
+            access_token = create_access_token(identity=username)
+            return jsonify(access_token=access_token)
+        else:
+            return 'Acceso directo no permitido.', 403
+        
