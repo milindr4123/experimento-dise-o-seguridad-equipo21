@@ -4,12 +4,13 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 import requests
 
-url = "http://localhost:5000/entrenamiento"  # Modifica la URL según la configuración de tu servidor Flask
+url = "http://localhost:5001/api2/entrenamiento"  # Modifica la URL según la configuración de tu servidor Flask
 
 
 class Entrenamientos(Resource):
     @jwt_required()
     def post(self):
+
         response = requests.get(url)
     # Verifica si la solicitud fue exitosa (código de estado HTTP 200)
         if response.status_code == 200:

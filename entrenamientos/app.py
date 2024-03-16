@@ -4,8 +4,6 @@ from flask_restful import Api
 
 from Modelo.Auth import Auth
 from Modelo.Protected import Protected
-from Modelo.Autenticacion import Autenticacion
-from Modelo.Entrenamientos import Entrenamientos
 import requests
 
 GATEWAY_HEADER = 'X-From-Gateway'
@@ -19,14 +17,13 @@ def create_app():
 
     #api.add_resource(Auth, "/auth")   
     #api.add_resource(Protected, "/protected")
-    api.add_resource(Autenticacion, "/autenticacion")
-    api.add_resource(Entrenamientos, "/entrenamientos")
+    api.add_resource(Protected, "/entrenamiento")
+
     
-    @app.route('/api/<path:path>', methods=['GET', 'POST'])
+    @app.route('/api2/<path:path>', methods=['GET', 'POST'])
     def proxy(path):
         SERVICES = {
-            'autenticacion',
-            'entrenamientos'
+            'entrenamiento'
         }
 
 
@@ -38,7 +35,7 @@ def create_app():
 
             response = requests.request(
                 method=request.method,
-                url=f"http://localhost:5000/{path}",
+                url=f"http://localhost:5001/{path}",
                 headers=request.headers,
                 data=request.get_data(),
                 cookies=request.cookies,
@@ -54,4 +51,4 @@ def create_app():
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5001)
