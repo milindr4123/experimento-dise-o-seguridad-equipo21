@@ -30,11 +30,11 @@ class PagosResource(Resource):
 
         
 
-        resend.api_key = "re_7Ch3ECbj_4CmLXcC4dKov8sLpPzcSCuqG"
+        resend.api_key = "re_WhsYaTBT_P2LFEzySKAb9JDpJwXS6SJbV"
 
         r = resend.Emails.send({
         "from": "Acme <onboarding@resend.dev>",
-        "to": "arquitecturaagil@gmail.com",
+        "to": "diegog4321@gmail.com",
         "subject": "Hello World",
         "html": f'Hola {payment.name_partner}, tu información de pagos se ha actualizado correctamente.'
         })
