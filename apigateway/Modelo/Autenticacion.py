@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 import hashlib
 
-from apigateway.Modelo.Auth import Auth
+from Modelo.Auth import Auth
 
 
 class Autenticacion(Resource):

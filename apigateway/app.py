@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
-from Modelo.Auth import Auth
-from Modelo.Protected import Protected
+#from Modelo.Auth import Auth
+#from Modelo.Protected import Protected
 from Modelo.Autenticacion import Autenticacion
 from Modelo.Entrenamientos import Entrenamientos
 import requests
