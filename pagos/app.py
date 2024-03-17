@@ -20,7 +20,7 @@ def create_app():
     app.config['JWT_SECRET_KEY'] = 'frase-secreta'
     app.config['PROPAGATE_EXCEPTIONS'] = True
 
-    app.config['MAIL_SERVER'] = 'smtp.example.com'
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 587
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USERNAME'] = 'arquitecturaagil@gmail.com'

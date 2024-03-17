@@ -4,6 +4,7 @@ from flask_mail import Mail, Message
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from Modelo.model import db, Pago
+import resend
 mail = Mail()
 
 class PagosResource(Resource):
@@ -27,10 +28,15 @@ class PagosResource(Resource):
         payment.bank_name = payment_request["banco"]        
         db.session.commit()
 
-        msg = Message('Actualización de información bancaria',
-                      sender='your_email@example.com',
-                      recipients=[payment.email])
-        msg.body = f'Hola {payment.name_partner}, tu información de pagos se ha actualizado correctamente.'
-        mail.send(msg)
+        
 
-        flash('¡Información bancaria actualizada!')
+        resend.api_key = "re_7Ch3ECbj_4CmLXcC4dKov8sLpPzcSCuqG"
+
+        r = resend.Emails.send({
+        "from": "Acme <onboarding@resend.dev>",
+        "to": "arquitecturaagil@gmail.com",
+        "subject": "Hello World",
+        "html": f'Hola {payment.name_partner}, tu información de pagos se ha actualizado correctamente.'
+        })
+
+        return "Usuario actualizado con éxito!"
