@@ -16,18 +16,21 @@ class PagosResource(Resource):
         db.session.commit()
         return 'Usuario creado con éxito!'
     
-    def put(self, id_pago, nombre, numero_cuenta, correo, cedula, banco):
-        user = Pago.query.get_or_404(id_pago)
-        user.account_number = numero_cuenta
-        user.name_partner = nombre
-        user.id_partner = cedula
-        user.bank_name = banco
-        user.email = correo        
+    @jwt_required()
+    def put(self):
+        payment_request = request.json
+        payment = Pago.query.get_or_404(payment_request["id_pago"])
+        payment.name_partner = payment_request["nombre"]
+        payment.account_number = payment_request["numero_cuenta"]
+        payment.email = payment_request["correo"]
+        payment.id_partner = payment_request["cedula"]
+        payment.bank_name = payment_request["banco"]        
+        db.session.commit()
 
         msg = Message('Actualización de información bancaria',
                       sender='your_email@example.com',
-                      recipients=[user.email])
-        msg.body = f'Hola {user.username}, tu información bancaria se ha actualizado correctamente.'
+                      recipients=[payment.email])
+        msg.body = f'Hola {payment.name_partner}, tu información de pagos se ha actualizado correctamente.'
         mail.send(msg)
 
         flash('¡Información bancaria actualizada!')

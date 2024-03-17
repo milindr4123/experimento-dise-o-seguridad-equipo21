@@ -20,4 +20,18 @@ class Pago(Resource):
             return data
         else:
             print("Error:", response.status_code)
+
+
+    @jwt_required()
+    def put(self):
+        headers = {
+            'Authorization': "" + request.headers.get('Authorization', None),
+        }
+        response = requests.put(url, headers=headers, json=request.json)
+        # Verifica si la solicitud fue exitosa (código de estado HTTP 200)
+        if response.status_code == 200:
+            data = response.json()  # Obtiene los datos de la respuesta en formato JSON
+            return data
+        else:
+            print("Error:", response.status_code)
                 
