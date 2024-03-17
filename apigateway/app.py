@@ -1,11 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
-
-#from Modelo.Auth import Auth
-#from Modelo.Protected import Protected
 from Modelo.Autenticacion import Autenticacion
 from Modelo.Entrenamientos import Entrenamientos
+from Modelo.Pagos import Pago
 import requests
 
 GATEWAY_HEADER = 'X-From-Gateway'
@@ -17,16 +15,16 @@ def create_app():
     app.config["JWT_SECRET_KEY"] = "tu_super_secreto_secreto"  # Cambia esto por una llave secreta real
     jwt = JWTManager(app)
 
-    #api.add_resource(Auth, "/auth")   
-    #api.add_resource(Protected, "/protected")
     api.add_resource(Autenticacion, "/autenticacion")
     api.add_resource(Entrenamientos, "/entrenamientos")
+    api.add_resource(Pago, "/pago")
     
-    @app.route('/api/<path:path>', methods=['GET', 'POST'])
+    @app.route('/api/<path:path>', methods=['GET', 'POST', 'PUT'])
     def proxy(path):
         SERVICES = {
             'autenticacion',
-            'entrenamientos'
+            'entrenamientos',
+            'pago',
         }
 
 
